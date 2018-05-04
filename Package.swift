@@ -9,11 +9,12 @@ let package = Package(
         .library(name: "SimpleStorageSigner", targets: ["SimpleStorageSigner"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/vapor/service.git", from: "1.0.0"),
         .package(url: "https://github.com/vapor/http.git", from: "3.0.0"),
         .package(url: "https://github.com/vapor/crypto.git", from: "3.1.0"),
     ],
     targets: [
-        .target(name: "SimpleStorageSigner", dependencies: ["HTTP", "Crypto"]),
+        .target(name: "SimpleStorageSigner", dependencies: ["Service", "HTTP", "Crypto"]),
         .testTarget(name: "SimpleStorageSignerTests", dependencies: ["SimpleStorageSigner"]),
     ]
 )
