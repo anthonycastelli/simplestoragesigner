@@ -30,8 +30,8 @@ public final class SimpleStorageSigner {
     let service = "s3"
     
     /// Initialize a new Signer
-    public init(server: URLRepresentable, accessKey: String, secretKey: String, region: Region, securityToken: String? = nil) {
-        self.host = server.convertToURL()
+    public init(server: URLRepresentable? = nil, accessKey: String, secretKey: String, region: Region, securityToken: String? = nil) {
+        self.host = server?.convertToURL()
         self.accessKey = accessKey
         self.secretKey = secretKey
         self.region = region
