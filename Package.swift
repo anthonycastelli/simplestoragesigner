@@ -14,7 +14,7 @@ let package = Package(
         .package(url: "https://github.com/vapor/crypto.git", from: "3.1.0"),
     ],
     targets: [
-        .target(name: "SimpleStorageSigner", dependencies: ["HTTP", "Crypto"]),
+        .target(name: "SimpleStorageSigner", dependencies: ["HTTP", "Crypto", "Service"]),
         .testTarget(name: "SimpleStorageSignerTests", dependencies: ["SimpleStorageSigner"]),
     ]
 )
