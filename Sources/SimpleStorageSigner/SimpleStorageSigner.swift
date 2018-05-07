@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import Service
 import HTTP
 import Crypto
 
-public final class SimpleStorageSigner {
+public final class SimpleStorageSigner: Service {
     /// The base URL
     let host: URL?
     
