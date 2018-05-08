@@ -57,6 +57,19 @@ extension SimpleStorageSigner {
     func path(_ url: URL) -> String {
         return !url.path.isEmpty ? url.path.encode(with: .pathAllowed) ?? "/" : "/"
     }
+
+    public func presignedURLV4(httpMethod: HTTPMethod, url: URL, expiration: Expiration, headers: [String: String]) throws -> URL? {
+        let dates = Dates(Date())
+        var updatedHeaders = headers
+        updatedHeaders["Host"] = url.host ?? self.region.host
+
+        let (canonRequest, fullURL) = try self.presignedURLCanonRequest(httpMethod, dates: dates, expiration: expiration, url: url, headers: updatedHeaders)
+
+        let stringToSign = try self.createStringToSign(canonRequest, dates: dates)
+        let signature = try self.createSignature(stringToSign, timeStampShort: dates.short)
+        let presignedURL = URL(string: fullURL.absoluteString.appending("&X-Amz-Signature=\(signature)"))
+        return presignedURL
+    }
     
     func presignedURLCanonRequest(_ httpMethod: HTTPMethod, dates: Dates, expiration: Expiration, url: URL, headers: [String: String]) throws -> (String, URL) {
         guard let credScope = self.credentialScope(dates.short).encode(with: .queryAllowed),
